@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import E_nav from './components/E_nav';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import SendIcon from '@mui/icons-material/Send';
@@ -34,6 +34,7 @@ const sendEmail= async(e)=>{
 
   return (
     <div style={img}>
+    <div><E_nav/></div>
         <div className="container ">
             <div className='d-flex justify-content-center'> 
                  <h3>SENDING MAIL</h3>
