@@ -7,6 +7,7 @@ import Student from './components/Student';
 import StudentDashboard from './components/Studentdashboard';
 import Login from './components/Login';
 import Main from './components/Main';
+import Email from './components/Email';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path={'/addash'} element={<Admin_dash/>}></Route>
         <Route path={'/list'}  element={<Student/>}></Route>
         <Route path={'/s'} element={<Main child={<StudentDashboard/>}/>}></Route> 
+        <Route path={'/mail'} element={<Email/>}></Route>
       </Routes>
     </div>
   );

@@ -55,6 +55,31 @@ router.post('/login/admin', async (req, res) => {
         return res.status(401).json({ message: 'Invalid email or password' });
       }
     } catch (error) {
+        console.log(error);
+    }
+})
+//for admin dashboard to access batch
+// router.get('/view' ,async(req,res)=>{
+//     students.find()
+//     .then((data)=>{res.json(data);})
+//     .catch((err)=>{console.log(err);})
+// })
+
+
+
+// to display batchwise student
+router.get('/:batch',async(req,res)=>{
+    try{
+    const batch = req.params.batch;
+    console.log(batch);
+  const data= await students.find({batchName:batch,status:1})
+  res.status(200).json(data);
+    }
+    catch(error)
+    {
+        res.status(404).send('no data found');
+    }
+})
       console.error('Login error:', error);
     }
   });
