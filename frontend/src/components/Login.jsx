@@ -12,21 +12,40 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const defaultTheme = createTheme();
 
 const Workspace = () => {
-      const Navigate = useNavigate();
- 
-      function authentication (){
+      const navigate = useNavigate();
+         
+  const [user,setUser] = useState();
+  const inputHandler = (e)=>{
+    setUser({...user,[e.target.name]:e.target.value});
+    console.log(user);
+  };
+  const userLogin = () => {
+    axios.post("http://localhost:3001/api/login/student", user).then((res) => {
+        alert(res.data.message);
+        navigate('/s');
+      })
+      .catch((err) => {
+        console.error('User login error:', err);
+        alert('Error logging in');
+      });
+  };
 
-        if(email=='Admin'&& password=='Admin'){
-         Navigate('/addash')
-        }else{
-         Navigate('/s')
-         }
-  }
+  const adminLogin = () => {
+    axios.post("http://localhost:3001/api/login/admin", user).then((res) => {
+        alert(res.data.message);
+        navigate('/addash'); 
+      })
+      .catch((err) => {
+        console.error('Admin login error:', err);
+        alert('Error logging in');
+      });
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -70,6 +89,7 @@ const Workspace = () => {
                 fullWidth
                 id="email"
                 label="Email Address"
+                onChange={inputHandler}
                 name="email"
                 autoComplete="email"
                 autoFocus
@@ -80,6 +100,7 @@ const Workspace = () => {
                 fullWidth
                 name="password"
                 label="Password"
+                onChange={inputHandler}
                 type="password"
                 id="password"
                 autoComplete="current-password"
@@ -88,8 +109,11 @@ const Workspace = () => {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
-              <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={authentication}>
-              Sign In
+               <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={adminLogin}>
+              Admin
+              </Button>
+              <Button type="submit" fullWidth variant="contained" sx={{ mt: 1, mb: 2 }} onClick={userLogin}>
+              Student
               </Button>
               <Grid container>
                 <Grid item xs>
@@ -97,11 +121,11 @@ const Workspace = () => {
                     Forgot password?
                   </Link>
                 </Grid>
-                <Grid item>
+                {/* <Grid item>
                   <Link href="#" variant="body2">
                     {'Don\'t have an account? Sign Up'}
                   </Link>
-                </Grid>
+                </Grid> */}
               </Grid>
             </Box>
           </Box>

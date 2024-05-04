@@ -9,6 +9,8 @@ const studentschema = mongoose.Schema({
     batchName:String,
     mark:Number,
     gender:String,
+    status:Number,
+    role:String
 })
 
 const studentModel = mongoose.model('student',studentschema);
