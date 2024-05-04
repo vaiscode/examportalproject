@@ -19,14 +19,14 @@ const defaultTheme = createTheme();
 const Workspace = () => {
       const Navigate = useNavigate();
  
-      function authentication (){
+  //     function authentication (){
 
-        if(email=='Admin'&& password=='Admin'){
-         Navigate('/addash')
-        }else{
-         Navigate('/s')
-         }
-  }
+  //       if(email=='Admin'&& password=='Admin'){
+  //        Navigate('/addash')
+  //       }else{
+  //        Navigate('/s')
+  //        }
+  // }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -88,7 +88,7 @@ const Workspace = () => {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
-              <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={authentication}>
+              <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} >
               Sign In
               </Button>
               <Grid container>

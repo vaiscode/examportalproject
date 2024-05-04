@@ -1,53 +1,77 @@
 
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
-import React from 'react'
+import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import React, { useEffect, useState } from 'react';
+import Placeholder from 'react-bootstrap/Placeholder';
+import E_nav from './E_nav';
+import SendIcon from '@mui/icons-material/Send';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import {Link, useLocation} from 'react-router-dom';
+import axios from 'axios';
 
 
 let imageStyle = {
-  height: "100%",
+  
  //  width: "500px",
    backgroundImage:
    'url("https://st.depositphotos.com/1001069/1259/i/450/depositphotos_12595238-stock-photo-nature-blurred-bokeh-background.jpg")',
    backgroundSize: "cover",
    backgroundRepeat: "no-repeat",
-   height:'91vh',
-   color: "white", 
-   
+   height:'100vh',
+ 
 };
 
-function createData(
-  name= String,
-  calories= Number,
-  fat= Number,
-  carbs= Number,
-  protein= Number,
-) {
-  return { name, calories, fat, carbs, protein };
-}
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
 
-const Student = () => {
+
+const Student = () =>{
+  const location=useLocation();
+
+    const batch=location.state.batch;
+    console.log(batch);
+    const [rows,setRows]=useState([]);
+
+
+useEffect(()=>{
+  axios.get("http://localhost:3001/api/"+batch).then((res)=>{
+setRows(res.data);
+  })
+  .catch((err)=>{
+    console.log(err);
+  })
+
+},[]);
+
+
+
+
+
+
   return (
     <div style={imageStyle}>
+      <div>
+        <E_nav/>
+      </div>
+       <div >
+      <Placeholder as="p" animation="glow"> <h1 style={{marginLeft:'39%'}}>STUDENT LIST</h1>
+        <Placeholder sm={12}  />
+      </Placeholder>
+      </div>
+    <div>
  <TableContainer component={Paper} style={{width:'75%',marginLeft:'11%'}}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell>STUDENT NAME</TableCell>
+            <TableCell align="right">DOB</TableCell>
+            <TableCell align="right">PHONE NUMBER</TableCell>
+            <TableCell align="right">EMAIL</TableCell>
+            <TableCell align="right">PASSWORD</TableCell>
+            <TableCell align="right">GENDER</TableCell>
+            <TableCell align="right">INTERNAL MARK</TableCell>
+
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {rows.map((row)=>(
             <TableRow
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -55,16 +79,34 @@ const Student = () => {
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell align="right">{row.dob}</TableCell>
+              <TableCell align="right">{row.phoneNumber}</TableCell>
+              <TableCell align="right">{row.email}</TableCell>
+              <TableCell align="right">{row.password}</TableCell>
+              <TableCell align="right">{row.gender}</TableCell>
+              <TableCell align="right">{row.mark}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
-        
+    </div> 
+    <div>
+    <Button variant="contained" endIcon={<SendIcon />} style={{marginLeft:'45%',marginTop:'5%'}}><Link style={{color:'white',textDecoration:'none'}} to={'/mail'}> Send EMAIL </Link>
+ 
+</Button>&nbsp;&nbsp;&nbsp;&nbsp;
+ <Button
+  component="label"
+  role={undefined}
+  variant="contained"
+  tabIndex={-1}
+  startIcon={<CloudUploadIcon />}
+  style={{marginLeft:'35%',marginTop:'5%'}}
+>
+  Upload mark sheet
+  <input type="file" />
+</Button>
+</div>
     </div>
   )
 }

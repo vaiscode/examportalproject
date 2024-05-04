@@ -1,6 +1,6 @@
 import React from 'react'
-import { AppBar, Box, Button, IconButton, Link, Toolbar, Typography } from '@mui/material'
-
+import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material'
+import {Link} from 'react-router-dom';
 const Ad_nav = () => {
   return (
     <Box sx={{ flexGrow: 1 }} >
