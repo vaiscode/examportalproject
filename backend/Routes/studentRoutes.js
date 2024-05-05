@@ -1,9 +1,37 @@
 const express = require("express");
 const router  = express.Router();
+const jwt = require('jsonwebtoken');
 const students  = require("../Model/student");
 
 router.use(express.json());
 
+function verifytoken (req,res,next){
+
+  const token = req.headers.token;
+  try {
+    if(!token) throw 'Unauthorized access';
+    let payload = jwt.verify(token,'adminkey');
+    if(!payload) throw 'Unauthorized access';
+    next()
+  } catch (error) {
+    res.status(404).send('Error')
+  }
+  
+}
+
+function verifystudenttoken (req,res,next){
+
+  const token = req.headers.token;
+  try {
+    if(!token) throw 'Unauthorized access';
+    let payload = jwt.verify(token,'studentkey');
+    if(!payload) throw 'Unauthorized access';
+    next()
+  } catch (error) {
+    res.status(404).send('Error')
+  }
+  
+}
 
 //login/admin
 router.post('/login/admin', async (req, res) => {
@@ -17,7 +45,10 @@ router.post('/login/admin', async (req, res) => {
         return res.status(404).json({ message: 'Admin not found' });
       }
       if (admin.password==password) {
-        return res.json({ message: 'Admin logged in successfully', admin });
+        let payload = {email:email,password:password};
+        let admintoken = jwt.sign(payload,'adminkey');
+
+        return res.send({ message: 'Admin logged in successfully', token:admintoken });
       }
       else{
         return res.status(401).json({ message: 'Invalid email or password' });
@@ -40,7 +71,10 @@ router.post('/login/student', async (req, res) => {
       }
   
       if (user.password==password) {
-        return res.json({ message: 'Student logged in successfully', user });
+        let payload = {email:email,password:password};
+        let studenttoken = jwt.sign(payload,'studentkey');
+
+        return res.json({ message: 'Student logged in successfully', token:studenttoken });
       } 
       else {
         return res.status(401).json({ message: 'Invalid email or password' });
@@ -61,7 +95,7 @@ router.post('/login/student', async (req, res) => {
 
 
 // to display batchwise student
-router.get('/:batch',async(req,res)=>{
+router.get('/:batch',verifytoken,async(req,res)=>{
     try{
     const batch = req.params.batch;
     console.log(batch);

@@ -28,7 +28,8 @@ const Workspace = () => {
   const userLogin = () => {
     axios.post("http://localhost:3001/api/login/student", user).then((res) => {
         alert(res.data.message);
-        navigate('/s');
+        sessionStorage.setItem('studentToken',res.data.studenttoken);
+        navigate("/s");
       })
       .catch((err) => {
         console.error('User login error:', err);
@@ -39,7 +40,8 @@ const Workspace = () => {
   const adminLogin = () => {
     axios.post("http://localhost:3001/api/login/admin", user).then((res) => {
         alert(res.data.message);
-        navigate('/addash'); 
+        sessionStorage.setItem('adminToken',res.data.admintoken);
+        navigate("/addash"); 
       })
       .catch((err) => {
         console.error('Admin login error:', err);
