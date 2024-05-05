@@ -7,7 +7,7 @@ import SendIcon from '@mui/icons-material/Send';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import {Link, useLocation} from 'react-router-dom';
 import axios from 'axios';
-
+import axiosInstance from '../axiosinterceptor'
 
 let imageStyle = {
   
@@ -31,7 +31,7 @@ const Student = () =>{
 
 
 useEffect(()=>{
-  axios.get("http://localhost:3001/api/"+batch).then((res)=>{
+  axiosInstance.get("http://localhost:3001/api/"+batch).then((res)=>{
 setRows(res.data);
   })
   .catch((err)=>{

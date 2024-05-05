@@ -17,7 +17,7 @@ import axios from 'axios';
 
 const defaultTheme = createTheme();
 
-const Workspace = () => {
+const Login = () => {
       const navigate = useNavigate();
          
   const [user,setUser] = useState();
@@ -111,10 +111,10 @@ const Workspace = () => {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
-               <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={adminLogin}>
+               <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={adminLogin}>
               Admin
               </Button>
-              <Button type="submit" fullWidth variant="contained" sx={{ mt: 1, mb: 2 }} onClick={userLogin}>
+              <Button fullWidth variant="contained" sx={{ mt: 1, mb: 2 }} onClick={userLogin}>
               Student
               </Button>
               <Grid container>
@@ -137,7 +137,7 @@ const Workspace = () => {
   );
 };
 
-export default Workspace;
+export default Login;
 
 
 
