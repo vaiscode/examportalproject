@@ -23,18 +23,18 @@ const Admin_dash = () => {
 
   // const [rows,setRows] = useState();
 
-                    // useEffect(()=>{
-                    //   axios.get("http://localhost:3001/api/view").then((res)=>{
-                    // setRows(res.data);
-                    //   })
-                    //   .catch((err)=>{
-                    //     console.log(err);
-                    //   })
+  //                   useEffect(()=>{
+  //                     axios.get("http://localhost:3001/api/view").then((res)=>{
+  //                   setRows(res.data);
+  //                     })
+  //                     .catch((err)=>{
+  //                       console.log(err);
+  //                     })
 
-                    // },[]);
+  //                   },[]);
 
   const navigate = useNavigate();
-
+  
                   const directed = (batch) => {
                     const b=batch;
                     console.log(b);

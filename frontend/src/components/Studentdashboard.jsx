@@ -1,10 +1,7 @@
-
-
 import React, { useState } from 'react';
 import { Box, Grid, Typography, Accordion, AccordionSummary, AccordionDetails, Button, Dialog, DialogContent, DialogActions, DialogContentText, DialogTitle, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { styled } from '@mui/material/styles';
-
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
@@ -49,11 +46,11 @@ const SwipeableTextMobileStepper = () => {
   };
 
   return (
-    <Box sx={{ maxWidth: 500, flexGrow: 1 }}>
+    <Box sx={{  flexGrow: 1 }}>
       <Typography variant="h6" gutterBottom align='center'>
-        NEW COURSES <br />
+        NEW COURSES 
         OFFERED  
-        FOR YOU  <br /> <br />
+        FOR YOU  <br/>
       </Typography>
       <AutoPlaySwipeableViews
         index={activeStep}
@@ -64,7 +61,7 @@ const SwipeableTextMobileStepper = () => {
           <Box key={step.label} component="img" src={step.imgPath} alt={step.label} style={{ maxWidth: '100%', height: 'auto' }} />
         ))}
       </AutoPlaySwipeableViews>
-      <MobileStepper
+      {/* <MobileStepper
         steps={maxSteps}
         position="static"
         activeStep={activeStep}
@@ -80,7 +77,7 @@ const SwipeableTextMobileStepper = () => {
             Back
           </Button>
         }
-      />
+      /> */}
     </Box>
   );
 };
@@ -96,17 +93,16 @@ const Item = styled('div')(({ theme }) => ({
 
 const Sidebar = () => {
   return (
-    <Item style={{ backgroundColor: 'grey'  }}>
+    <Item style={{ backgroundColor: 'beige'  }}>
       {/* Profile Section */}
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '20px', backgroundColor: 'grey' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center',}}>
         {/* Replace img tag with Avatar */}
         <Avatar src="default-profile-pic.jpg" alt="Profile" style={{ width: 80, height: 80, marginBottom: 10 }} />
         <Typography variant="h6">Amritha</Typography>
       </div>
-    
-
+  
       {/* Batch Section */}
-      <Accordion style={{ backgroundColor: 'grey', width:'100%' }}>
+      <Accordion style={{ backgroundColor: 'white', width:'100%' }}>
         <AccordionSummary expandIcon={<ArrowDropDownIcon />} aria-controls="batch-content" id="batch-header">
           <Typography>Batch</Typography>
         </AccordionSummary>
@@ -118,7 +114,7 @@ const Sidebar = () => {
       </Accordion>
 
       {/* Grade Section */}
-      <Accordion style={{ backgroundColor: 'grey' }}>
+      <Accordion style={{ backgroundColor: 'white' }}>
         <AccordionSummary expandIcon={<ArrowDropDownIcon />} aria-controls="grade-content" id="grade-header">
           <Typography>Grade</Typography>
         </AccordionSummary>
@@ -131,208 +127,6 @@ const Sidebar = () => {
     </Item>
   );
 };
-
-
-
-
-// const ExitTestButton = () => {
-//   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
-//   const [showForm, setShowForm] = useState(false);
-//   const [formData, setFormData] = useState({
-//     name: '',
-//     phoneNumber: '',
-//     email: '',
-//     dob: '',
-//     batchName: '',
-//     gender: '',
-//   });
-//   const [isSubmitting, setIsSubmitting] = useState(false);
-//   const [isExitTestDisabled, setIsExitTestDisabled] = useState(false);
-//   const [showSnackbar, setShowSnackbar] = useState(false);
-
-//   const handleExitTest = () => {
-//     if (isExitTestDisabled) {
-//       alert('Form has already been submitted.');
-//     } else {
-//       setShowConfirmationDialog(true);
-//     }
-//   };
-
-//   const handleConfirmExit = () => {
-//     setShowConfirmationDialog(false);
-//     setShowForm(true);
-//   };
-
-//   const handleCloseConfirmationDialog = () => {
-//     setShowConfirmationDialog(false);
-//   };
-
-//   const handleInputChange = (field) => (event) => {
-//     setFormData({ ...formData, [field]: event.target.value });
-//   };
-
-//   const handleSubmitForm = async () => {
-//     try {
-//       setIsSubmitting(true);
-//       // Simulate form submission (replace with actual backend API call)
-//       console.log('Form data submitted:', formData);
-//       // Reset form data
-//       setFormData({
-//         name: '',
-//         phoneNumber: '',
-//         email: '',
-//         dob: '',
-//         batchName: '',
-//         gender: '',
-//       });
-//       setIsExitTestDisabled(true);
-//       setShowSnackbar(true); // Show Snackbar upon successful form submission
-//     } catch (error) {
-//       console.error('Error submitting form:', error);
-//     } finally {
-//       setIsSubmitting(false);
-//       setShowForm(false);
-//     }
-//   };
-
-//   const handleSnackbarClose = () => {
-//     setShowSnackbar(false);
-//   };
-
-//   return (
-//     <div align='center'>
-//       <Typography variant="h6" gutterBottom >
-//         Ready to take Exit Examination? Click here to <br /> Register<br />
-//       </Typography>
-//       <Button
-//          align='center'
-//         onClick={handleExitTest}
-//         color="primary"
-//         variant="contained"
-//         disabled={isExitTestDisabled}
-        
-//       >
-//         Exam Registration
-//       </Button>
-
-//       <Dialog open={showConfirmationDialog} onClose={handleCloseConfirmationDialog}>
-//         <DialogTitle>Exit Test Confirmation</DialogTitle>
-//         <DialogContent>
-//           <DialogContentText >
-//             Are you sure you want to proceed? 
-//           </DialogContentText>
-//         </DialogContent>
-//         <DialogActions>
-//           <Button onClick={handleCloseConfirmationDialog} color="primary">
-//             Cancel
-//           </Button>
-//           <Button onClick={handleConfirmExit} color="primary">
-//             Ok
-//           </Button>
-//         </DialogActions>
-//       </Dialog>
-
-//       <Dialog open={showForm} onClose={() => setShowForm(false)}>
-//         <DialogTitle>Form</DialogTitle>
-//         <DialogContent>
-//           <TextField
-//             label="Name"
-//             value={formData.name}
-//             onChange={handleInputChange('name')}
-//             fullWidth
-//             margin="dense"
-//           />
-//           <TextField
-//             label="Phone Number"
-//             value={formData.phoneNumber}
-//             onChange={handleInputChange('phoneNumber')}
-//             fullWidth
-//             margin="dense"
-//           />
-//           <TextField
-//             label="Email"
-//             value={formData.email}
-//             onChange={handleInputChange('email')}
-//             fullWidth
-//             margin="dense"
-//           />
-//           <TextField
-//             label="DOB"
-//             type="date"
-//             value={formData.dob}
-//             onChange={handleInputChange('dob')}
-//             fullWidth
-//             margin="dense"
-//             InputLabelProps={{
-//               shrink: true,
-//             }}
-//           />
-//           <FormControl fullWidth margin="dense">
-//             <InputLabel>Batch Name</InputLabel>
-//             <Select
-//               value={formData.batchName}
-//               onChange={handleInputChange('batchName')}
-//             >
-//               {['KKEM March CSA', 'KKEM March DSA', 'KKEM March MLAI', 'KKEM March FSD', 'KKEM March ST'].map((batch) => (
-//                 <MenuItem key={batch} value={batch}>
-//                   {batch}
-//                 </MenuItem>
-//               ))}
-//             </Select>
-//           </FormControl>
-//           <FormControl fullWidth margin="dense">
-//             <InputLabel>Gender</InputLabel>
-//             <Select
-//               value={formData.gender}
-//               onChange={handleInputChange('gender')}
-//             >
-//               <MenuItem value="male">Male</MenuItem>
-//               <MenuItem value="female">Female</MenuItem>
-//               <MenuItem value="other">Other</MenuItem>
-//             </Select>
-//           </FormControl>
-//         </DialogContent>
-//         <DialogActions>
-//           <Button onClick={handleSubmitForm} color="primary" disabled={isSubmitting}>
-//             Submit
-//           </Button>
-//           <Button onClick={() => setShowForm(false)} color="primary" disabled={isSubmitting}>
-//             Cancel
-//           </Button>
-//         </DialogActions>
-//       </Dialog>
-
-//       {/* Snackbar to display form submission confirmation */}
-//       <Snackbar
-//         open={showSnackbar}
-//         autoHideDuration={3000} // Duration to show the Snackbar (3 seconds)
-//         onClose={handleSnackbarClose}
-//         anchorOrigin={{ vertical: 'top', horizontal: 'center' }} // Position Snackbar at the top center
-//       >
-//         <Box sx={{ width: '100%' }}> {/* Adjust the width as needed */}
-//           <Alert
-//             onClose={handleSnackbarClose}
-//             severity="success"
-//             sx={{
-//               borderRadius: '8px', // Rounded corners
-//               boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)', // Box shadow
-//               padding: '20px', // Increased padding
-//               fontSize: '1rem', // Font size
-//             }}
-//           >
-//             <h4>Form submitted successfully!</h4>
-//           </Alert>
-//         </Box>
-//       </Snackbar>
-//     </div>
-//   );
-// };
-
-
-
-
-
-
 
 
 const ExitTestButton = () => {
@@ -413,7 +207,7 @@ const ExitTestButton = () => {
   return (
     <div align='center'>
       <Typography variant="h6" gutterBottom>
-        Ready to take Exit Examination? Click here to <br /> Register
+        Ready to take Exit Examination? Click here to Register !
       </Typography>
       <Button
         onClick={handleExitTest}
@@ -421,7 +215,7 @@ const ExitTestButton = () => {
         variant="contained"
         disabled={isExitTestDisabled}
       >
-        EXIT TEST
+        Register
       </Button>
 
       <Dialog open={showConfirmationDialog} onClose={handleCloseConfirmationDialog}>
@@ -523,9 +317,9 @@ const ExitTestButton = () => {
             onClose={handleSnackbarClose}
             severity="success"
             sx={{
-              borderRadius: '8px', // Rounded corners
-              boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)', // Box shadow
-              padding: '20px', // Increased padding
+              borderRadius: '8px', //Rounded corners
+              boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)', //Box shadow
+              padding: '20px', //Increased padding
               fontSize: '1rem', // Font size
             }}
           >
@@ -542,68 +336,45 @@ const ExitTestButton = () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const StudentDashboard = () => {
         return (
-<Box sx={{ minHeight: '100vh', backgroundColor: 'lightgrey' }}>
+    
+<Box sx={{  backgroundColor: 'beige' ,}}>
       <Grid container spacing={0}>
         {/* Sidebar Grid Item (Extra Small: 12 columns, Small: 4 columns, Medium: 3 columns) */}
-        <Grid item xs={12} sm={4} md={3}>
-          <Box sx={{ height:'10cm', backgroundColor: 'grey', padding: '20px', borderRadius: '12px', borderRight: '2px solid black' }}>
+        <Grid item sm={12} md={6}>
+          <Box sx={{backgroundColor: 'beige', padding: '20px', borderRadius: '12px'}}>
             {/* Sidebar content */}
             <Sidebar />
-
-          </Box>
-        </Grid>
-
+          
+           <br />
+           <br />
+           <br />
         {/* Main Content Grid Item (Extra Small: 12 columns, Small: 8 columns, Medium: 6 columns) */}
-        <Grid item xs={12} sm={8} md={6}>
-          <Box sx={{ height:'10cm',backgroundColor: 'beige', padding: '20px', borderRadius: '12px', borderRight: '2px solid black' }}>
+        {/* <Grid item xs={12} sm={8} md={6}>
+          <Box sx={{ height:'8cm',backgroundColor: 'beige', padding: '20px', borderRadius: '12px', borderRight: '2px solid black' }}> */}
             {/* Main content */}
             <ExitTestButton />
           </Box>
         </Grid>
-
-        {/* Carousel Grid Item (Extra Small: 12 columns, Medium: 3 columns) */}
-        <Grid item xs={12} md={3}>
-          <Box sx={{height:'10cm', padding: '20px' }}>
+        {/* </Box>
+        </Grid> */}
+      
+       {/* Carousel Grid Item (Extra Small: 12 columns, Medium: 3 columns) */}
+       <Grid item xs={12} md={6}>
+          <Box sx={{height:'10cm', padding: '10px',}}>
             {/* Carousel component */}
             <SwipeableTextMobileStepper />
 
           </Box>
         </Grid>
 
+        
+        
+
         {/* Footer Grid Item (Extra Small: 12 columns) */}
         <Grid item xs={12}>
-          <Box sx={{ bgcolor: 'green', color: 'white', textAlign: 'center', py: 2 }}>
+          <Box sx={{marginTop:'5em', bgcolor: 'grey', color: 'white', textAlign: 'center', py: 2 }}>
             {/* Footer content */}
             <Typography variant="h6" gutterBottom>
               Contact Information
@@ -639,7 +410,7 @@ const StudentDashboard = () => {
 
             {/* Copyright Section */}
             <Typography variant="body2" color="textSecondary" style={{ marginTop: '20px' }}>
-              &copy; {new Date().getFullYear()} Your Company Name. All rights reserved.
+              &copy; {new Date().getFullYear()} ICTAK. All rights reserved.
             </Typography>
           </Box>
         </Grid>
