@@ -95,8 +95,9 @@ router.post('/login/student', async (req, res) => {
 
 
 // to display batchwise student
-router.get('/:batch',verifytoken,async(req,res)=>{
-    try{
+router.get('/:batch',async(req,res)=>{
+    try
+    {
     const batch = req.params.batch;
     console.log(batch);
   const data= await students.find({batchName:batch,status:1})

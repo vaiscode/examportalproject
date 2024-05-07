@@ -19,16 +19,21 @@ const defaultTheme = createTheme();
 
 const Login = () => {
       const navigate = useNavigate();
+
+      //  const [email,setEmail]=useState('');
          
   const [user,setUser] = useState();
   const inputHandler = (e)=>{
     setUser({...user,[e.target.name]:e.target.value});
+    
     console.log(user);
   };
   const userLogin = () => {
     axios.post("http://localhost:3001/api/login/student", user).then((res) => {
         alert(res.data.message);
         sessionStorage.setItem('studentToken',res.data.studenttoken);
+        // const em=e.target.email.value;
+        // console.log(em);
         navigate("/s");
       })
       .catch((err) => {
@@ -36,6 +41,8 @@ const Login = () => {
         alert('Error logging in');
       });
   };
+  
+  
 
   const adminLogin = () => {
     axios.post("http://localhost:3001/api/login/admin", user).then((res) => {
@@ -95,6 +102,7 @@ const Login = () => {
                 name="email"
                 autoComplete="email"
                 autoFocus
+              
               />
               <TextField
                 margin="normal"

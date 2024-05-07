@@ -2,13 +2,9 @@ import React, { useState } from 'react';
 import { Box, Grid, Typography, Accordion, AccordionSummary, AccordionDetails, Button, Dialog, DialogContent, DialogActions, DialogContentText, DialogTitle, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { styled } from '@mui/material/styles';
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
-import MobileStepper from '@mui/material/MobileStepper';
 import Avatar from '@mui/material/Avatar';
-import axios from 'axios';
 import Snackbar from '@mui/material/Snackbar';
 import { Alert } from '@mui/material';
 
@@ -108,7 +104,7 @@ const Sidebar = () => {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Batch Information Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Batch Information
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -120,7 +116,7 @@ const Sidebar = () => {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Grade Information Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
+            Grade Information 
           </Typography>
         </AccordionDetails>
       </Accordion>

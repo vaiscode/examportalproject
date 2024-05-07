@@ -37,10 +37,10 @@ const Admin_dash = () => {
   
                   const directed = (batch) => {
                     const b=batch;
-                    console.log(b);
+                    // console.log(b);
                   
                     
-                    console.log(batch);
+                    // console.log(batch);
                     navigate('/list',{state:{batch:b}});
                   };
   
