@@ -1,5 +1,5 @@
 
-import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Box, Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react';
 import Placeholder from 'react-bootstrap/Placeholder';
 import E_nav from './E_nav';
@@ -51,7 +51,7 @@ setRows(res.data);
         <E_nav/>
       </div>
        <div >
-      <Placeholder as="p" animation="glow"> <h1 style={{marginLeft:'39%'}}>STUDENT LIST</h1>
+      <Placeholder as="p" animation="glow"> <h1 style={{marginLeft:'39%'}}><b>STUDENT LIST</b></h1>
         <Placeholder sm={12}  />
       </Placeholder>
       </div>
@@ -60,13 +60,13 @@ setRows(res.data);
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>STUDENT NAME</TableCell>
-            <TableCell align="right">DOB</TableCell>
-            <TableCell align="right">PHONE NUMBER</TableCell>
-            <TableCell align="right">EMAIL</TableCell>
-            <TableCell align="right">PASSWORD</TableCell>
-            <TableCell align="right">GENDER</TableCell>
-            <TableCell align="right">INTERNAL MARK</TableCell>
+            <TableCell><b><i>STUDENT NAME</i></b></TableCell>
+            <TableCell align="right"><b><i>DOB</i></b></TableCell>
+            <TableCell align="right"><b><i>PHONE NUMBER</i></b></TableCell>
+            <TableCell align="right"><b><i>EMAIL</i></b></TableCell>
+            <TableCell align="right"><b><i>PASSWORD</i></b></TableCell>
+            <TableCell align="right"><b><i>GENDER</i></b></TableCell>
+            <TableCell align="right"><b><i>INTERNAL MARK</i></b></TableCell>
 
           </TableRow>
         </TableHead>
@@ -107,6 +107,47 @@ setRows(res.data);
   <input type="file" />
 </Button>
 </div>
+<Grid item xs={12}>
+          <Box sx={{marginTop:'5em', bgcolor: 'grey', color: 'white', textAlign: 'center', py: 2 }}>
+            {/* Footer content */}
+            <Typography variant="h6" gutterBottom>
+              Contact Information
+            </Typography>
+            <Grid container justifyContent="center" spacing={4}>
+              {/* Headquarters */}
+              <Grid item>
+                <Typography variant="body1">
+                  <strong>Headquarters:</strong><br />
+                  <h5>G1, Ground Floor, Thejaswini, Technopark Campus<br />
+                  Thiruvananthapuram, Kerala, India - 695 581</h5>
+                </Typography>
+              </Grid>
+
+              {/* Regional Centre (North) */}
+              <Grid item>
+                <Typography variant="body1">
+                  <strong>Regional Centre (North):</strong><br />
+                 <h5> 2nd Floor, UL Cyberpark Building, Nellikode Post<br />
+                  Kozhikode, Kerala, India - 673 016</h5>
+                </Typography>
+              </Grid>
+
+              {/* Regional Centre (Central) */}
+              <Grid item>
+                <Typography variant="body1">
+                  <strong>Regional Centre (Central):</strong><br />
+                  <h5>B-Wing, Kanikonna Villa, Infopark Campus<br />
+                  Koratty, Thrissur, Kerala, India - 680 308</h5>
+                </Typography>
+              </Grid>
+            </Grid>
+
+            {/* Copyright Section */}
+            <Typography variant="body2" color="textSecondary" style={{ marginTop: '20px' }}>
+              &copy; {new Date().getFullYear()} ICTAK. All rights reserved.
+            </Typography>
+          </Box>
+        </Grid>
     </div>
   )
 }
