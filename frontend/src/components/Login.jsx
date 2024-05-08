@@ -25,36 +25,25 @@ const Login = () => {
   const [user,setUser] = useState();
   const inputHandler = (e)=>{
     setUser({...user,[e.target.name]:e.target.value});
-    
-    console.log(user);
   };
-  const userLogin = () => {
-    axios.post("http://localhost:3001/api/login/student", user).then((res) => {
-        alert(res.data.message);
-        sessionStorage.setItem('studentToken',res.data.studenttoken);
-        // const em=e.target.email.value;
-        // console.log(em);
-        navigate("/s");
-      })
-      .catch((err) => {
-        console.error('User login error:', err);
-        alert('Error logging in');
-      });
-  };
-  
-  
 
-  const adminLogin = () => {
-    axios.post("http://localhost:3001/api/login/admin", user).then((res) => {
-        alert(res.data.message);
-        sessionStorage.setItem('adminToken',res.data.admintoken);
-        navigate("/addash"); 
-      })
-      .catch((err) => {
-        console.error('Admin login error:', err);
-        alert('Error logging in');
-      });
-  };
+    const handleLogin = () => {
+      axios.post(`http://localhost:3001/api/login`, user)
+        .then((res) => {
+          alert(res.data.message);
+          if (res.data.admintoken) {
+            sessionStorage.setItem('admintoken', res.data.admintoken);
+            navigate('/addash'); // Navigate to admin dashboard
+          } else if (res.data.studenttoken) {
+            sessionStorage.setItem('studenttoken', res.data.studenttoken);
+            navigate('/s'); // Navigate to student page
+          }
+        })
+        .catch((error) => {
+          console.error('Login error:', error);
+          alert('Error logging in');
+        });
+    };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -119,12 +108,9 @@ const Login = () => {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
-               <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={adminLogin}>
-              Admin
-              </Button>
-              <Button fullWidth variant="contained" sx={{ mt: 1, mb: 2 }} onClick={userLogin}>
-              Student
-              </Button>
+               <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={() => handleLogin()}>
+                Login
+               </Button>
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">
