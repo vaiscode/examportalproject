@@ -7,15 +7,7 @@ import axios from 'axios';
 
 
 
-var sectionStyle = {
-  backgroundImage: `url('https://e0.pxfuel.com/wallpapers/718/388/desktop-wallpaper-admin-creative-admin-background-full-administrator.jpg')`,
 
-            height: "90vh",
-            marginTop: "-70px",
-            fontSize: "50px",
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-        };
        
 
 const Admin_dash = () => {
@@ -47,9 +39,9 @@ const Admin_dash = () => {
   return (
     <div>
       <Ad_nav/> 
-    <div style={sectionStyle}>
+    <div style={{backgroundColor:'beige'}}>
     
-      <div style={{marginLeft:'10%',marginright:'10%',marginTop:'4.5%',marginBottom:'30%'}}>
+      <div style={{marginLeft:'10%',marginright:'10%',marginTop:'1%'}}>
       {/* {rows.map((val)=>( */}
       <Box >  
        
@@ -128,10 +120,53 @@ const Admin_dash = () => {
         </Grid>
      
       </Grid>
-  
-     </Box>
-       {/* ))} */}
+      </Box>
       </div>
+      <Grid item xs={12}>
+          <Box sx={{marginTop:'5em', bgcolor: 'grey', color: 'white', textAlign: 'center', py: 2 }}>
+            {/* Footer content */}
+            <Typography variant="h6" gutterBottom>
+              Contact Information
+            </Typography>
+            <Grid container justifyContent="center" spacing={4}>
+              {/* Headquarters */}
+              <Grid item>
+                <Typography variant="body1">
+                  <strong>Headquarters:</strong><br />
+                  <h5>G1, Ground Floor, Thejaswini, Technopark Campus<br />
+                  Thiruvananthapuram, Kerala, India - 695 581</h5>
+                </Typography>
+              </Grid>
+
+              {/* Regional Centre (North) */}
+              <Grid item>
+                <Typography variant="body1">
+                  <strong>Regional Centre (North):</strong><br />
+                 <h5> 2nd Floor, UL Cyberpark Building, Nellikode Post<br />
+                  Kozhikode, Kerala, India - 673 016</h5>
+                </Typography>
+              </Grid>
+
+              {/* Regional Centre (Central) */}
+              <Grid item>
+                <Typography variant="body1">
+                  <strong>Regional Centre (Central):</strong><br />
+                  <h5>B-Wing, Kanikonna Villa, Infopark Campus<br />
+                  Koratty, Thrissur, Kerala, India - 680 308</h5>
+                </Typography>
+              </Grid>
+            </Grid>
+
+            {/* Copyright Section */}
+            <Typography variant="body2" color="textSecondary" style={{ marginTop: '20px' }}>
+              &copy; {new Date().getFullYear()} ICTAK. All rights reserved.
+            </Typography>
+          </Box>
+        </Grid>
+      
+     
+       {/* ))} */}
+     
     
  </div>
 </div>
