@@ -19,6 +19,8 @@ const defaultTheme = createTheme();
 
 const Login = () => {
       const navigate = useNavigate();
+
+      //  const [email,setEmail]=useState('');
          
   const [user,setUser] = useState();
   const inputHandler = (e)=>{
@@ -89,6 +91,7 @@ const Login = () => {
                 name="email"
                 autoComplete="email"
                 autoFocus
+              
               />
               <TextField
                 margin="normal"
