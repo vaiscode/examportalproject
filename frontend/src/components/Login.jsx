@@ -20,8 +20,6 @@ const defaultTheme = createTheme();
 
 const Login = () => {
       const navigate = useNavigate();
-
-      //  const [email,setEmail]=useState('');
          
   const [user,setUser] = useState();
   const inputHandler = (e)=>{

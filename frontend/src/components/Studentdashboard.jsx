@@ -70,7 +70,6 @@ const Sidebar = () => {
   const [userData, setUserData] = useState({ name: '', batch: '', mark: '' });
 
   useEffect(() => {
-    // Fetch user data from the backend when the component mounts
     const fetchUserData = async () => {
       try {
         const token = sessionStorage.getItem('studenttoken');
