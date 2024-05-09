@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import axiosInstance from '../axiosinterceptor'
 
 const defaultTheme = createTheme();
 
@@ -33,12 +34,12 @@ const Login = () => {
           alert(res.data.message);
           if (res.data.admintoken) {
             sessionStorage.setItem('admintoken', res.data.admintoken);
-            navigate('/addash'); // Navigate to admin dashboard
+            navigate('/addash');
           } else if (res.data.studenttoken) {
             sessionStorage.setItem('studenttoken', res.data.studenttoken);
-            navigate('/s'); // Navigate to student page
-          }
-        })
+            navigate('/s', { state: { student: res.data.student } });
+      }
+    })
         .catch((error) => {
           console.error('Login error:', error);
           alert('Error logging in');

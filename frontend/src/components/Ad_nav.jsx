@@ -17,7 +17,6 @@ const Ad_nav = () => {
              ADMIN Dashboard
             </Typography>
             <Button color="inherit"><Link to={'/addash'} style={{textDecoration:'none',color:'white'}}>Home</Link></Button>
-            
             <Button color="inherit" onClick={tokenrelease}><Link to={'/'} style={{textDecoration:'none',color:'white'}}>Logout</Link></Button>
            </Toolbar>
           </AppBar>

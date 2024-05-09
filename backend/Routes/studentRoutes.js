@@ -33,57 +33,6 @@ function verifystudenttoken (req,res,next){
   
 }
 
-// //login/admin
-// router.post('/login/admin', async (req, res) => {
-//     try {
-//         const email = req.body.email;
-//         const password = req.body.password;
-
-//         const admin = await students.findOne({ email: email, role: 'admin' });
-  
-//       if (!admin) {
-//         return res.status(404).json({ message: 'Admin not found' });
-//       }
-//       if (admin.password==password) {
-//         let payload = {email:email,password:password};
-//         let admintoken = jwt.sign(payload,'adminkey');
-
-//         return res.send({ message: 'Admin logged in successfully', token:admintoken });
-//       }
-//       else{
-//         return res.status(401).json({ message: 'Invalid email or password' });
-//       }
-//     } catch (error) {
-//       console.error('Login error:', error);
-//     }
-//   });
-
-// //login/student
-// router.post('/login/student', async (req, res) => {
-//     try {
-//         const email = req.body.email;
-//         const password = req.body.password;
-
-//        const user = await students.findOne({ email:email, role: 'student' });
-  
-//       if (!user) {
-//         return res.status(404).json({ message: 'User not found' });
-//       }
-  
-//       if (user.password==password) {
-//         let payload = {email:email,password:password};
-//         let studenttoken = jwt.sign(payload,'studentkey');
-
-//         return res.json({ message: 'Student logged in successfully', token:studenttoken });
-//       } 
-//       else {
-//         return res.status(401).json({ message: 'Invalid email or password' });
-//       }
-//     } catch (error) {
-//       console.error('Login error:', error);
-//     }
-//   });
-
 router.post('/login', async (req, res) => {
   try {
       const email = req.body.email;
@@ -108,7 +57,8 @@ router.post('/login', async (req, res) => {
           }
           const payload = { email: email, role: 'student' };
           const studenttoken = jwt.sign(payload, 'studentkey');
-          return res.json({ message: 'Student logged in successfully', studenttoken: studenttoken });
+          return res.json({ message: 'Student logged in successfully', studenttoken, student: { name: user.name, batch: user.batchName, mark: user.mark } });
+        
       } else {
           return res.status(401).json({ message: 'Invalid user' });
       }
@@ -117,6 +67,8 @@ router.post('/login', async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+
 
 
 //for admin dashboard to access batch
@@ -144,3 +96,4 @@ router.get('/:batch',async(req,res)=>{
 })
 
 module.exports = router;
+  
