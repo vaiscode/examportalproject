@@ -68,6 +68,22 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// GET route to fetch student data by email
+router.get('/student/:email', async (req, res) => {
+  try {
+    const email = req.params.email;
+    const student = await students.findOne({email:email});
+
+    if (student) {
+      return res.json({student});
+    } else {
+      return res.status(404).json({ message:'Student not found'});
+    }
+  } catch (error) {
+    console.error('Error fetching student data:',error);
+    return res.status(500).json({ message:'Error'});
+  }
+});
 
 
 

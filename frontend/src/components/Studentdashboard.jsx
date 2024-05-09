@@ -6,6 +6,7 @@ import { autoPlay } from 'react-swipeable-views-utils';
 import Avatar from '@mui/material/Avatar';
 import { Alert } from '@mui/material';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -63,6 +64,9 @@ const Item = styled('div')(({ theme }) => ({
 }));
 
 const Sidebar = () => {
+
+  const location = useLocation();
+ const email = location.state.email;
   const [userData, setUserData] = useState({ name: '', batch: '', mark: '' });
 
   useEffect(() => {
@@ -70,7 +74,7 @@ const Sidebar = () => {
     const fetchUserData = async () => {
       try {
         const token = sessionStorage.getItem('studenttoken');
-        const response = await axios.get('http://localhost:3001/api/student', {
+        const response = await axios.get('http://localhost:3001/api/student/'+email, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -102,7 +106,7 @@ const Sidebar = () => {
           </TableHead>
           <TableBody>
             <TableRow>
-              <TableCell>{userData.batch}</TableCell>
+              <TableCell>{userData.batchName}</TableCell>
               <TableCell>{userData.mark}</TableCell>
             </TableRow>
           </TableBody>

@@ -37,7 +37,7 @@ const Login = () => {
             navigate('/addash');
           } else if (res.data.studenttoken) {
             sessionStorage.setItem('studenttoken', res.data.studenttoken);
-            navigate('/s', { state: { student: res.data.student } });
+            navigate('/s', { state: { email: user.email } });
       }
     })
         .catch((error) => {
