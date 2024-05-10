@@ -94,17 +94,7 @@ setRows(res.data);
     <Button variant="contained" endIcon={<SendIcon />} style={{marginLeft:'45%',marginTop:'5%'}}><Link style={{color:'white',textDecoration:'none'}} to={'/mail'}> Send EMAIL </Link>
  
 </Button>&nbsp;&nbsp;&nbsp;&nbsp;
- <Button
-  component="label"
-  role={undefined}
-  variant="contained"
-  tabIndex={-1}
-  startIcon={<CloudUploadIcon />}
-  style={{marginLeft:'35%',marginTop:'5%'}}
->
-  Upload mark sheet
-  <input type="file" />
-</Button>
+ 
 </div>
 <Grid item xs={12}>
           <Box sx={{marginTop:'5em', bgcolor: 'grey', color: 'white', textAlign: 'center', py: 2 }}>

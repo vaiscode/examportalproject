@@ -3,8 +3,8 @@ const router=new express.Router();
 const nodemailer=require("nodemailer");
 
 router.post("/mail",(req,res)=>{
-    const {email}=req.body;
-    const {link1}="https://docs.google.com/document/d/15nq6PJmcIY3jgwPl3BkCMMgmal-pJZGgDGqY46tE9Ew/edit?usp=sharing";
+    const email=req.body.email;
+    const subb=req.body.sub;
 
 
 try {
@@ -19,7 +19,7 @@ try {
     const mailOptions = {
         from:process.env.EMAIL,
         to : email ,
-        subject:"sending email from react",
+        subject:subb,
         html:'<h1>marksheet</h1>',
         attachments :[{
             filename:'for_project.DOCX',

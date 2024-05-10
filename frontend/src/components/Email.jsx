@@ -20,6 +20,7 @@ let img={
 const Email = () => {
 
   const[email,setEmail]=useState("");
+  const[sub,setSub]=useState("");
   const doc1="https://docs.google.com/document/d/15nq6PJmcIY3jgwPl3BkCMMgmal-pJZGgDGqY46tE9Ew/edit?usp=sharing"
 const sendEmail= async(e)=>{
   e.preventDefault();
@@ -29,6 +30,7 @@ const sendEmail= async(e)=>{
       "content-type":"application/json"
     },
     body:JSON.stringify({email})
+  
     
   });
   console.log(res);
@@ -49,13 +51,19 @@ const sendEmail= async(e)=>{
         <Form.Label>Email address</Form.Label>
         <Form.Control type="email"  name='email' onChange={(e)=>{setEmail(e.target.value)}} />
       </Form.Group>
+
+      <Form.Group  controlId="formBasicEmail">
+        <Form.Label>Subject</Form.Label>
+        <Form.Control type="text"  name='sub' onChange={(e)=>{setSub(e.target.value)}}/>
+      </Form.Group>
+
       <Button
   component="label"
   role={undefined}
   variant="contained"
   tabIndex={-1}
   startIcon={<CloudUploadIcon />}
-  style={{marginTop:'10%',marginLeft:'10%'}}
+  style={{marginLeft:'35%',marginTop:'5%'}}
 >
   Upload mark sheet
   <input type="file" />
