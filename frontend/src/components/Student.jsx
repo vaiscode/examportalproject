@@ -24,7 +24,6 @@ let imageStyle = {
 
 const Student = () =>{
   const location=useLocation();
-
     const batch=location.state.batch;
     console.log(batch);
     const [rows,setRows]=useState([]);

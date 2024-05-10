@@ -85,7 +85,18 @@ router.get('/student/:email', async (req, res) => {
   }
 });
 
+//update 
 
+router.put('/submit/:email', async (req, res) => {
+  try {
+    const updatedStudentData = req.body;
+    const data = await students.findOneAndUpdate({ email: req.params.email }, updatedStudentData);
+    res.status(200).send({ message: 'Student registration completed successfully' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ error: 'Internal server error' });
+  }
+});
 
 //for admin dashboard to access batch
 // router.get('/view' ,async(req,res)=>{

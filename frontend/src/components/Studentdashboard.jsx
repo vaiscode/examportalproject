@@ -5,8 +5,8 @@ import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 import Avatar from '@mui/material/Avatar';
 import { Alert } from '@mui/material';
-import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import axiosInstance from '../axiosinterceptor';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -73,7 +73,7 @@ const Sidebar = () => {
     const fetchUserData = async () => {
       try {
         const token = sessionStorage.getItem('studenttoken');
-        const response = await axios.get('http://localhost:3001/api/student/'+email, {
+        const response = await axiosInstance.get('http://localhost:3001/api/student/'+email, {
           headers: {
             Authorization: `Bearer ${token}`
           }
