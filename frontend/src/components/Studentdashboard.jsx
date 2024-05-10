@@ -5,7 +5,7 @@ import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 import Avatar from '@mui/material/Avatar';
 import { Alert } from '@mui/material';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import axiosInstance from '../axiosinterceptor';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
@@ -91,7 +91,7 @@ const Sidebar = () => {
     <Item style={{ backgroundColor: 'beige', padding: '20px' }}>
       {/* Display student's name */}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '20px' }}>
-        <Avatar src="default-profile-pic.jpg" alt="Profile" style={{ width: 80, height: 80, marginBottom: 10 }} />
+        
         <Typography variant="h6">{userData.name}</Typography>
       </div>
       {/* Table container with white background */}
@@ -116,6 +116,30 @@ const Sidebar = () => {
 };
 
 const ExitTestButton = () => {
+
+  const location = useLocation();
+  const email = location.state.email;
+   const [userData, setUserData] = useState({ name: '', batch: '', mark: '' });
+ 
+   useEffect(() => {
+     const fetchUserData = async () => {
+       try {
+         const token = sessionStorage.getItem('studenttoken');
+         const response = await axiosInstance.get('http://localhost:3001/api/student/'+email, {
+           headers: {
+             Authorization: `Bearer ${token}`
+           }
+         });
+         setUserData(response.data.student);
+       } catch (error) {
+         console.error('Error fetching user data:', error);
+       }
+     };
+ 
+     fetchUserData();
+   }, []);
+
+
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
@@ -129,8 +153,11 @@ const ExitTestButton = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isExitTestDisabled, setIsExitTestDisabled] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
+  
+
 
   const handleExitTest = () => {
+
     if (isExitTestDisabled) {
       alert('Form has already been submitted.');
     } else {
@@ -139,8 +166,13 @@ const ExitTestButton = () => {
   };
 
   const handleConfirmExit = () => {
+    if(userData.mark>=50){
     setShowConfirmationDialog(false);
     setShowForm(true);
+    }
+    else{
+      alert("YOU ARE NOT ELEGIBLE TO ATTEND THE EXIT TEST");
+    }
   };
 
   const handleCloseConfirmationDialog = () => {
@@ -151,6 +183,9 @@ const ExitTestButton = () => {
     setFormData({ ...formData, [field]: event.target.value });
   };
 
+
+
+
   const handleSubmitForm = async () => {
     if (!isFormDataValid(formData)) {
       console.log('Form data is incomplete or invalid. Please check all fields.');
@@ -158,6 +193,8 @@ const ExitTestButton = () => {
     }
 
     try {
+      
+
       setIsSubmitting(true);
       console.log('Form data submitted:', formData);
       setFormData({
@@ -168,7 +205,13 @@ const ExitTestButton = () => {
         batchName: '',
         gender: '',
       });
-      setIsExitTestDisabled(true);
+
+     console.log(formData);
+     axiosInstance.put('http://localhost:3001/api/student/'+email,{formData})
+     .then(result=>console.log(result))
+     .catch(err=>console.log(err))
+      
+     setIsExitTestDisabled(true);
       setShowSnackbar(true);
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -187,6 +230,7 @@ const ExitTestButton = () => {
     return name && phoneNumber && email && dob && batchName && gender;
   };
 
+  
   return (
     <div align='center'>
       <Typography variant="h6" gutterBottom>
