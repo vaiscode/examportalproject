@@ -2,9 +2,11 @@ const express=require("express");
 const router=new express.Router();
 const nodemailer=require("nodemailer");
 
-router.post("/mail",(req,res)=>{
-    const email=req.body.email;
-    const subb=req.body.sub;
+router.post("/mail",async(req,res)=>{
+    const {email,subject}=req.body;
+    
+    console.log(email);
+    console.log(subject);
 
 
 try {
@@ -19,7 +21,7 @@ try {
     const mailOptions = {
         from:process.env.EMAIL,
         to : email ,
-        subject:subb,
+        subject:subject,
         html:'<h1>marksheet</h1>',
         attachments :[{
             filename:'for_project.DOCX',

@@ -6,7 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 const E_nav = () => {
   return (
     <div>
-       <Navbar bg="success" data-bs-theme="dark" className="justify-content-end me-auto">
+       <Navbar bg="primary" data-bs-theme="dark" className="justify-content-end me-auto">
       <Nav >
         <Nav.Item>
           <Nav.Link href="/addash" style={{color:'white',textDecoration:'none'}}>DASHBOARD</Nav.Link>
