@@ -23,6 +23,24 @@ const images = [
   {
     imgPath: 'https://drive.google.com/thumbnail?id=1tYeg5mExDTBR2JETV14AZWaeXIHdbJji&sz=w1000',
   },
+  {
+    imgPath: 'https://drive.google.com/thumbnail?id=1VJOfZEPukFF_O7TVH_awZ3vJEIA4CcBA&sz=w1000',
+  },
+  {
+    imgPath: 'https://drive.google.com/thumbnail?id=1YCbxTRPpjb4OyjEVIyg8ASQgVLZsErm9&sz=w1280',
+  },
+  {
+    imgPath: 'https://drive.google.com/thumbnail?id=1szgGuf8Os6U-umIagScV4MMOF5gOt8IZ&sz=w1280',
+  },
+  {
+    imgPath: 'https://drive.google.com/thumbnail?id=1BJ-fBcYAxQXDtqGZ3gLyQVbOk2_eirvC&sz=w1280',
+  },
+
+
+
+
+
+
 ];
 
 const SwipeableTextMobileStepper = () => {
