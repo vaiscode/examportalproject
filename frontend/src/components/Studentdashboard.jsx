@@ -184,7 +184,7 @@ const ExitTestButton = () => {
         if (student.mark < 50) {
           alert('You do not have enough marks to register for the Exit Test.');
         } else if (student.status === 1) {
-          alert('You are already registered for the Exit Test.');
+          alert('You have already registered for the Exit Test.');
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
