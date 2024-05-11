@@ -85,18 +85,6 @@ router.get('/student/:email', async (req, res) => {
   }
 });
 
-//update 
-
-router.put('/submit/:email', async (req, res) => {
-  try {
-    const updatedStudentData = req.body;
-    const data = await students.findOneAndUpdate({ email: req.params.email }, updatedStudentData);
-    res.status(200).send({ message: 'Student registration completed successfully' });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({ error: 'Internal server error' });
-  }
-});
 
 //for admin dashboard to access batch
 // router.get('/view' ,async(req,res)=>{
@@ -104,6 +92,52 @@ router.put('/submit/:email', async (req, res) => {
 //     .then((data)=>{res.json(data);})
 //     .catch((err)=>{console.log(err);})
 // })
+
+
+
+
+
+
+
+
+
+router.put('/student/:email', async (req, res) => {
+  const email = req.params.email;
+
+  try {
+    const student = await students.findOne({ email });
+
+    if (!student) {
+      return res.status(404).json({ error: 'Student not found' });
+    }
+
+    // Update student data based on the request body
+    student.name = req.body.name || student.name;
+    student.phoneNumber = req.body.phoneNumber || student.phoneNumber;
+    student.email = req.body.email || student.email;
+    student.dob = req.body.dob || student.dob;
+    student.batchName = req.body.batchName || student.batchName;
+    student.gender = req.body.gender || student.gender;
+
+    // Determine the status based on isExitTestDisabled
+    student.status = req.body.isExitTestDisabled ? 0 : 1; // Set status: 0 if isExitTestDisabled is true, otherwise 1
+
+    // Save the updated student data
+    await student.save();
+
+    res.status(200).json({ message: 'Student information updated successfully', student });
+  } catch (error) {
+    console.error('Error updating student information:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+
+
+
+
+
 
 
 

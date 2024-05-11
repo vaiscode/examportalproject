@@ -115,31 +115,23 @@ const Sidebar = () => {
   );
 };
 
-const ExitTestButton = () => {
 
+
+    
+const ExitTestButton = () => {
   const location = useLocation();
   const email = location.state.email;
-   const [userData, setUserData] = useState({ name: '', batch: '', mark: '' });
- 
-   useEffect(() => {
-     const fetchUserData = async () => {
-       try {
-         const token = sessionStorage.getItem('studenttoken');
-         const response = await axiosInstance.get('http://localhost:3001/api/student/'+email, {
-           headers: {
-             Authorization: `Bearer ${token}`
-           }
-         });
-         setUserData(response.data.student);
-       } catch (error) {
-         console.error('Error fetching user data:', error);
-       }
-     };
- 
-     fetchUserData();
-   }, []);
 
-
+  const [userData, setUserData] = useState({
+    name: '',
+    batch: '',
+    mark: '',
+    status: '', // assuming 'status' is part of userData
+    phoneNumber: '',
+    email: '',
+    dob: '',
+    gender: ''
+  });
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
@@ -148,31 +140,45 @@ const ExitTestButton = () => {
     email: '',
     dob: '',
     batchName: '',
-    gender: '',
+    gender: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isExitTestDisabled, setIsExitTestDisabled] = useState(false);
+  const [isExitTestDisabled, setIsExitTestDisabled] = useState(true); // Initially disabled
   const [showSnackbar, setShowSnackbar] = useState(false);
-  
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = sessionStorage.getItem('studenttoken');
+        const response = await axiosInstance.get(`http://localhost:3001/api/student/${email}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        setUserData(response.data.student);
+
+        // Check conditions to enable/disable the Register button
+        const isButtonEnabled = response.data.student.mark >= 50 && response.data.student.status === 0;
+        setIsExitTestDisabled(!isButtonEnabled);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, [email]);
 
   const handleExitTest = () => {
-
     if (isExitTestDisabled) {
-      alert('Form has already been submitted.');
+      alert('You are not eligible to register for the Exit Test.');
     } else {
       setShowConfirmationDialog(true);
     }
   };
 
   const handleConfirmExit = () => {
-    if(userData.mark>=50){
     setShowConfirmationDialog(false);
     setShowForm(true);
-    }
-    else{
-      alert("YOU ARE NOT ELEGIBLE TO ATTEND THE EXIT TEST");
-    }
   };
 
   const handleCloseConfirmationDialog = () => {
@@ -184,43 +190,50 @@ const ExitTestButton = () => {
   };
 
 
-
-
   const handleSubmitForm = async () => {
     if (!isFormDataValid(formData)) {
       console.log('Form data is incomplete or invalid. Please check all fields.');
       return;
     }
-
+  
     try {
-      
-
       setIsSubmitting(true);
-      console.log('Form data submitted:', formData);
-      setFormData({
-        name: '',
-        phoneNumber: '',
-        email: '',
-        dob: '',
-        batchName: '',
-        gender: '',
+  
+      const updatedFormData = {
+        ...formData,
+        email: email,
+        status: 1  // Set status to 1 for successful registration
+      };
+  
+      const token = sessionStorage.getItem('studenttoken');
+      const response = await axiosInstance.put(`http://localhost:3001/api/student/${email}`, updatedFormData, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
-
-     console.log(formData);
-     axiosInstance.put('http://localhost:3001/api/student/'+email,{formData})
-     .then(result=>console.log(result))
-     .catch(err=>console.log(err))
-      
-     setIsExitTestDisabled(true);
-      setShowSnackbar(true);
+  
+      console.log('Form submission response:', response.data);
+  
+      // Verify if status was updated to 1 in the response
+      if (response.data.student && response.data.student.status === 1) {
+        // Show success snackbar
+        setShowSnackbar(true);
+  
+        // Disable the Register button after successful registration
+        setIsExitTestDisabled(true);
+      } else {
+        console.log('Status not updated to 1. Response:', response.data);
+        // Handle unexpected response or status update failure
+      }
     } catch (error) {
       console.error('Error submitting form:', error);
+      // Handle error (e.g., show error message)
     } finally {
       setIsSubmitting(false);
       setShowForm(false);
     }
   };
-
+  
   const handleSnackbarClose = () => {
     setShowSnackbar(false);
   };
@@ -230,42 +243,76 @@ const ExitTestButton = () => {
     return name && phoneNumber && email && dob && batchName && gender;
   };
 
-  
   return (
-    <div align='center'>
-      <Typography variant="h6" gutterBottom>
-        Ready to take Exit Examination? Click here to Register !
-      </Typography>
-      <Button onClick={handleExitTest} color="primary" variant="contained" disabled={isExitTestDisabled}>
+    <div align="center">
+      <h6>Ready to take Exit Examination? Click here to Register!</h6>
+      <Button
+        onClick={handleExitTest}
+        color="primary"
+        variant="contained"
+        disabled={isExitTestDisabled}
+      >
         Register
       </Button>
 
       <Dialog open={showConfirmationDialog} onClose={handleCloseConfirmationDialog}>
         <DialogTitle>Exit Test Confirmation</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Are you sure you want to proceed?
-          </DialogContentText>
+          <DialogContentText>Are you sure you want to proceed?</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseConfirmationDialog} color="primary">Cancel</Button>
-          <Button onClick={handleConfirmExit} color="primary">Ok</Button>
+          <Button onClick={handleCloseConfirmationDialog} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleConfirmExit} color="primary">
+            Ok
+          </Button>
         </DialogActions>
       </Dialog>
 
       <Dialog open={showForm} onClose={() => setShowForm(false)}>
         <DialogTitle>Form</DialogTitle>
         <DialogContent>
-          <TextField label="Name" value={formData.name} onChange={handleInputChange('name')} fullWidth margin="dense" />
-          <TextField label="Phone Number" value={formData.phoneNumber} onChange={handleInputChange('phoneNumber')} fullWidth margin="dense" />
-          <TextField label="Email" value={formData.email} onChange={handleInputChange('email')} fullWidth margin="dense" />
-          <TextField label="DOB" type="date" value={formData.dob} onChange={handleInputChange('dob')} fullWidth margin="dense" InputLabelProps={{ shrink: true }} />
+          <TextField
+            label="Name"
+            value={formData.name}
+            onChange={handleInputChange('name')}
+            fullWidth
+            margin="dense"
+          />
+          <TextField
+            label="Phone Number"
+            value={formData.phoneNumber}
+            onChange={handleInputChange('phoneNumber')}
+            fullWidth
+            margin="dense"
+          />
+          <TextField
+            label="Email"
+            value={formData.email}
+            onChange={handleInputChange('email')}
+            fullWidth
+            margin="dense"
+          />
+          <TextField
+            label="DOB"
+            type="date"
+            value={formData.dob}
+            onChange={handleInputChange('dob')}
+            fullWidth
+            margin="dense"
+            InputLabelProps={{ shrink: true }}
+          />
           <FormControl fullWidth margin="dense">
             <InputLabel>Batch Name</InputLabel>
             <Select value={formData.batchName} onChange={handleInputChange('batchName')}>
-              {['KKEM March CSA', 'KKEM March DSA', 'KKEM March MLAI', 'KKEM March FSD', 'KKEM March ST'].map((batch) => (
-                <MenuItem key={batch} value={batch}>{batch}</MenuItem>
-              ))}
+              {['KKEM March CSA', 'KKEM March DSA', 'KKEM March MLAI', 'KKEM March FSD', 'KKEM March ST'].map(
+                (batch) => (
+                  <MenuItem key={batch} value={batch}>
+                    {batch}
+                  </MenuItem>
+                )
+              )}
             </Select>
           </FormControl>
           <FormControl fullWidth margin="dense">
@@ -278,21 +325,31 @@ const ExitTestButton = () => {
           </FormControl>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleSubmitForm} color="primary" disabled={isSubmitting}>Submit</Button>
-          <Button onClick={() => setShowForm(false)} color="primary" disabled={isSubmitting}>Cancel</Button>
+          <Button onClick={handleSubmitForm} color="primary" disabled={isSubmitting}>
+            Submit
+          </Button>
+          <Button onClick={() => setShowForm(false)} color="primary" disabled={isSubmitting}>
+            Cancel
+          </Button>
         </DialogActions>
       </Dialog>
 
-      <Snackbar open={showSnackbar} autoHideDuration={3000} onClose={handleSnackbarClose} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
-        <Box sx={{ width: '100%' }}>
-          <Alert onClose={handleSnackbarClose} severity="success" sx={{ borderRadius: '8px', boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)', padding: '20px', fontSize: '1rem' }}>
-            <h4>Form submitted successfully!</h4>
-          </Alert>
-        </Box>
+      <Snackbar
+        open={showSnackbar}
+        autoHideDuration={3000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert onClose={handleSnackbarClose} severity="success">
+          Form submitted successfully!
+        </Alert>
       </Snackbar>
     </div>
   );
 };
+
+
+
 
 const StudentDashboard = () => {
   return (
@@ -351,3 +408,6 @@ const StudentDashboard = () => {
 };
 
 export default StudentDashboard;
+
+
+
