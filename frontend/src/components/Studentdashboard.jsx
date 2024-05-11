@@ -155,18 +155,28 @@ const ExitTestButton = () => {
             Authorization: `Bearer ${token}`
           }
         });
-        setUserData(response.data.student);
-
+  
+        const { student } = response.data;
+  
         // Check conditions to enable/disable the Register button
-        const isButtonEnabled = response.data.student.mark >= 50 && response.data.student.status === 0;
+        const isButtonEnabled = student.mark >= 50 && student.status === 0;
         setIsExitTestDisabled(!isButtonEnabled);
+  
+        // Show alerts based on button disable reasons
+        if (student.mark < 50) {
+          alert('You do not have enough marks to register for the Exit Test.');
+        } else if (student.status === 1) {
+          alert('You are already registered for the Exit Test.');
+        }
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
     };
-
+  
     fetchUserData();
   }, [email]);
+  
+
 
   const handleExitTest = () => {
     if (isExitTestDisabled) {
