@@ -48,16 +48,16 @@ router.post('/login',verifytoken, async (req, res) => {
           if (user.password !== password) {
               return res.status(401).json({ message: 'Invalid email or password' });
           }
-          const payload = { email: email, role: 'admin' };
-          const admintoken = jwt.sign(payload, 'secretkey');
-          return res.json({ message: 'Admin logged in successfully', admintoken: admintoken });
+          // const payload = { email: email, role: 'admin' };
+          // const admintoken = jwt.sign(payload, 'secretkey');
+          return res.json({ message: 'Admin logged in successfully' }); //admintoken: admintoken 
       } else if (user.role === 'student') {
           if (user.password !== password) {
             return res.status(401).json({ message: 'Invalid email or password' });
           }
-          const payload = { email: email, role: 'student' };
-          const studenttoken = jwt.sign(payload, 'secretkey');
-          return res.json({ message: 'Student logged in successfully', studenttoken, student: { name: user.name, batch: user.batchName, mark: user.mark } });
+          // const payload = { email: email, role: 'student' };
+          // const studenttoken = jwt.sign(payload, 'secretkey');
+          return res.json({ message: 'Student logged in successfully', student: { name: user.name, batch: user.batchName, mark: user.mark } }); //, studenttoken
         
       } else {
           return res.status(401).json({ message: 'Invalid user' });
@@ -67,7 +67,6 @@ router.post('/login',verifytoken, async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
   }
 });
-
 
 // GET route to fetch student data by email
 router.get('/student/:email', async (req, res) => {
@@ -93,11 +92,6 @@ router.get('/student/:email', async (req, res) => {
 //     .then((data)=>{res.json(data);})
 //     .catch((err)=>{console.log(err);})
 // })
-
-
-
-
-
 
 
 
@@ -132,15 +126,6 @@ router.put('/student/:email', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
-
-
-
-
-
-
-
-
 
 // to display batchwise student
 router.get('/:batch',async(req,res)=>{
