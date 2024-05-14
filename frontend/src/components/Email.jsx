@@ -5,6 +5,8 @@ import Form from 'react-bootstrap/Form';
 import SendIcon from '@mui/icons-material/Send';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Box, Grid, Typography } from '@mui/material';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 let img={
     backgroundImage:`url('https://mrwallpaper.com/images/hd/animated-design-chromebook-background-e3s56alv0sopjtap.jpg')`,
@@ -19,26 +21,30 @@ let img={
 }
 
 const Email = () => {
+  const navigate = useNavigate();
 
-  const[email,setEmail]=useState("");
-  const[sub,setSub]=useState("");
-  const doc1="https://docs.google.com/document/d/15nq6PJmcIY3jgwPl3BkCMMgmal-pJZGgDGqY46tE9Ew/edit?usp=sharing"
+  const[email,setEmail]=useState({recipient:'',subject:'',doc:''});
+  // const[sub,setSub]=useState("");
+  // const[doc,setDoc]=useState("");
+  // const doc1="https://docs.google.com/document/d/15nq6PJmcIY3jgwPl3BkCMMgmal-pJZGgDGqY46tE9Ew/edit?usp=sharing"
+
+const handleChange=(e)=>{
+  const{name,value}=e.target;
+  setEmail({...email,[name]:value});
+}
+
+
 const sendEmail= async(e)=>{
   e.preventDefault();
-  console.log(sub);
-  const res = await fetch("/mail",{
-    method:"POST",
-    headers:{
-      "content-type":"application/json"
-    },
-    body:JSON.stringify({email,sub})
-  
-    
-    
-  });
-  console.log(res);
-  alert("successfully mailed");
-}
+  console.log(email.recipient);
+  console.log(email.subject);
+  console.log(email.doc);
+  axios.post('http://localhost:3000/mail',email)
+  .then(respose=>{alert("success");
+    navigate('/addash');
+  })
+  .catch(error=>{console.log(error);});
+};
 
   return (
     <div >
@@ -52,24 +58,19 @@ const sendEmail= async(e)=>{
             <Form className='mt-4 col-lg-4'>
       <Form.Group  controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
-        <Form.Control type="email"  name='email' onChange={(e)=>{setEmail(e.target.value)}} />
+        <Form.Control type="email"  name='recipient' value={email.recipient} onChange={handleChange} />
       </Form.Group>
 
       <Form.Group  controlId="formBasicEmail">
         <Form.Label>Subject</Form.Label>
-        <Form.Control type="text"  name='sub' onChange={(e)=>{setSub(e.target.value)}}/>
+        <Form.Control type="text"  name='subject' value={email.subject} onChange={handleChange}/>
       </Form.Group>
 
-      <Button
-  component="label"
-  role={undefined}
-  variant="contained"
-  tabIndex={-1}
-  startIcon={<CloudUploadIcon />}
-  style={{marginLeft:'35%',marginTop:'5%'}}>
-  Upload mark sheet
-  <input type="file" />
-</Button>
+      <Form.Group  controlId="formBasicEmail">
+        <Form.Label>Documenet link</Form.Label>
+        <Form.Control type="text"  name='doc' value={email.doc} onChange={handleChange}/>
+      </Form.Group>
+     
        <br /><br /><br />
        <Button variant="primary" type="submit" style={{marginLeft:'30%'}} onClick={sendEmail} ><SendIcon/>send Mail</Button>
     </Form>

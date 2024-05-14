@@ -1,11 +1,17 @@
 const express=require("express");
 const router=new express.Router();
 const nodemailer=require("nodemailer");
+const cors=require('cors');
+const bodyParser=require('body-parser');
 
+
+
+router.use(bodyParser.json());
+router.use(cors());
 router.post("/mail",async(req,res)=>{
-    const {email,subject}=req.body;
+    const {recipient,subject,doc}=req.body;
     
-    console.log(email);
+    // console.log(email);
     console.log(subject);
 
 
@@ -20,14 +26,15 @@ try {
     });
     const mailOptions = {
         from:process.env.EMAIL,
-        to : email ,
+        to : recipient ,
         subject:subject,
-        html:'<h1>marksheet</h1>',
-        attachments :[{
-            filename:'for_project.DOCX',
-            path :'https://docs.google.com/document/d/15nq6PJmcIY3jgwPl3BkCMMgmal-pJZGgDGqY46tE9Ew/edit?usp=sharing'
-            }
-        ]
+        text:doc
+        // html:'<h1>marksheet</h1>',
+        // attachments :[{
+        //     filename:'for_project.DOCX',
+        //     path :doc
+        //     }
+        // ]
     }
 
     transporter.sendMail(mailOptions,(error,info)=>{
